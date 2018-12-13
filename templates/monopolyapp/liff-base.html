@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=750px, user-scalable=no">
+  <!--link rel="stylesheet" href="main.css"-->
+  <!--script src="main.js"></script-->
+  <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+  <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body><script>liff.init(data=>{
+    const lineId = data.context.userId;
+    const lineName = data.context.displayName;
+},err=>{});</script>
+{% block body %}
+{% endblock %}
+
+</body>
+
+</html>
