@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '48)j(737#e3rzc0)!hl*kxd^l#q0&lba76dy9%^%0opi&fdn(h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -132,8 +132,6 @@ STATICFILES_FINDERS = [
 try:
     from .local_settings import *
 except ImportError:
-    pass
-if not DEBUG:
     import django_heroku
     import dj_database_url
     django_heroku.settings(locals())
