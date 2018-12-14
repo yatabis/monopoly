@@ -65,8 +65,10 @@ def join_room(request):
 class RoomViewSets(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    filter_fields = ('state',)
 
 
 class PlayerViewSets(viewsets.ModelViewSet):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
+    filter_fields = ('room_id', 'position')
