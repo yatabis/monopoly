@@ -17,7 +17,7 @@ class Room(models.Model):
 
 
 class Player(models.Model):
-    line_id = models.CharField(max_length=64, default="")
+    line_id = models.CharField(max_length=64, default="", primary_key=True)
     line_name = models.CharField(max_length=64, default="")
     room_id = models.ForeignKey('Room', on_delete=models.CASCADE)
     position = models.CharField(max_length=8, choices=(('parent', '親'), ('child', '子')), default='child')
