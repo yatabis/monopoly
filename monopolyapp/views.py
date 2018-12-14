@@ -38,7 +38,12 @@ def make_room(request):
         line_name = request.POST['line-name']
         created_room = Room.objects.filter(room_id=room_id)
         created_room.update(parent=line_id)
-        Player.objects.create(line_id=line_id, line_name=line_name, room_id=created_room.get(), position='parent')
+        if Player.objects.filter(line_id=line_id).exists():
+            if Player.objects.filter(line_id=line_id).get().room_id == "":
+                Player.objects.filter(line_id=line_id).update(
+                    room_id=created_room.get(), position='parent', money=2000000, deal='free')
+        else:
+            Player.objects.create(line_id=line_id, line_name=line_name, room_id=created_room.get(), position='parent')
         return render(request, 'monopolyapp/room.html', {
             'title': title,
             'room_id': room_id,
