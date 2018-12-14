@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from .models import Player
 from .functions import create_room, set_new_room
-from .line import reply_text, get_line_id
+from .line import reply_text
 
 # Create your views here.
 
@@ -26,10 +26,8 @@ def line_callback(request):
 def make_room(request):
     title = "部屋を作成"
     room_id = set_new_room()
-    parent = get_line_id(request.body)
     Player.objects.create(room_id=room_id, position='parent')
     return render(request, 'monopolyapp/room.html', {
         'title': title,
         'room_id': room_id,
-        'parent': parent
     })

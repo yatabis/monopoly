@@ -13,7 +13,7 @@ class Room(models.Model):
 
     room_id = models.CharField(max_length=128, primary_key=True)
     state = models.CharField(max_length=16, choices=STATE_SET, default='starting')
-    parent = models.CharField(max_length=64)
+    parent = models.CharField(max_length=64, default="")
 
 
 class Player(models.Model):
