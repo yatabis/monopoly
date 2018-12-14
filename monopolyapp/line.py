@@ -13,4 +13,6 @@ def reply_text(token, text):
 
 
 def get_line_id(req):
-    return req['source']['userId']
+    print(req)
+    print(json.loads(req))
+    return json.loads(req)['source']['userId']

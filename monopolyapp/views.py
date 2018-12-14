@@ -26,8 +26,8 @@ def line_callback(request):
 def make_room(request):
     title = "部屋を作成"
     room_id = set_new_room()
-    parent = get_line_id(request)
-    Player.objects.create(parent, room_id=room_id, position='parent')
+    parent = get_line_id(request.body)
+    Player.objects.create(room_id=room_id, position='parent')
     return render(request, 'monopolyapp/room.html', {
         'title': title,
         'room_id': room_id,
