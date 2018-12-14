@@ -6,7 +6,7 @@ from .models import Room, Player
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        field = ('roomid', 'state')
+        field = ('room_id', 'state')
 
 
 class PlayerSerializer(serializers.ModelSerializer):

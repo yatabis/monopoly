@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from monopolyapp.urls import router
+
 urlpatterns = [
     path('monopoly/', include('monopolyapp.urls')),
-    path('api/', include('monopolyapp.routers')),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
 ]
