@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from .models import Room, Player
 from .functions import create_room, set_new_room
-from .line import reply_text
+from .line import reply_text, push_text
 
 # Create your views here.
 
@@ -53,4 +53,6 @@ def join_room(request):
         room_id = request.POST['room-id']
         line_id = request.POST['line-id']
         line_name = request.POST['line-name']
+        # Player.objects.create(line_id=line_id, line_name=line_name, room_id=room_id)
+        push_text(line_id, f"ルーム{room_id[:6]}に入室しました。")
         return render(request, 'monopolyapp/joined.html', {'title': title, 'room_id': room_id})
