@@ -1,6 +1,9 @@
 from django.shortcuts import render
+import django_filters
+from rest_framework import viewsets, filters
 
 from .models import Room, Player
+from .serializer import RoomSerializer, PlayerSerializer
 from .functions import create_room, set_new_room
 from .line import reply_text, push_text
 
@@ -53,6 +56,17 @@ def join_room(request):
         room_id = request.POST['room-id']
         line_id = request.POST['line-id']
         line_name = request.POST['line-name']
-        # Player.objects.create(line_id=line_id, line_name=line_name, room_id=room_id)
+        Player.objects.create(line_id=line_id, line_name=line_name, room_id=room_id)
         push_text(line_id, f"ルーム{room_id[:6]}に入室しました。")
         return render(request, 'monopolyapp/joined.html', {'title': title, 'room_id': room_id})
+
+
+# API
+class RoomViewSets(viewsets.ModelViewSet):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+
+class PlayerViewSets(viewsets.ModelViewSet):
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer

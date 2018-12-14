@@ -18,5 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('monopoly/', include('monopolyapp.urls')),
+    path('api/', include('monopolyapp.routers')),
     path('admin/', admin.site.urls),
 ]

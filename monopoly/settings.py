@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'monopolyapp.apps.MonopolyappConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
