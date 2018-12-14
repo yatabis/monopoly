@@ -33,7 +33,7 @@ def make_room(request):
         room_id = request.POST['room-id']
         created_room = Room.objects.filter(room_id=room_id)
         created_room.update(parent=line_id)
-        Player.objects.create(line_id=line_id, room_id=created_room, position='parent')
+        Player.objects.create(line_id=line_id, room_id=created_room.get(), position='parent')
         return render(request, 'monopolyapp/room.html', {
             'title': title,
             'room_id': room_id,
