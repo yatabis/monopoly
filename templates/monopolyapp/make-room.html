@@ -1,0 +1,18 @@
+{% extends 'monopolyapp/liff-base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+  <form id="form" method="post" action="{% url 'make-room' room_id %}">
+    {% csrf_token %}
+    <input id="input" type="hidden" name="line-id" value="">
+  </form>
+  <script>
+  let input = document.getElementById('input');
+  input.setAttribute('value', lineId);
+  document.getElementById('form').submit();
+  </script>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Player
+from .models import Room, Player
 from .functions import create_room, set_new_room
 from .line import reply_text
 
@@ -23,11 +23,17 @@ def line_callback(request):
                 reply_text(reply_token, "メッセージの返答には対応していません。")
 
 
-def make_room(request):
-    title = "部屋を作成"
-    room_id = set_new_room()
-    Player.objects.create(room_id=room_id, position='parent')
-    return render(request, 'monopolyapp/room.html', {
-        'title': title,
-        'room_id': room_id,
-    })
+def make_room(request, room_id=None):
+    if room_id is None:
+        room_id = set_new_room()
+        return render(request, 'monopolyapp/make-room.html', {'room_id': room_id})
+    else:
+        title = "部屋を作成"
+        line_id = request['line-id']
+        Player.objects.create(line_id=line_id, room_id=room_id, position='parent')
+        Room.objects.filter(room_id=room_id).update(parent=line_id)
+        return render(request, 'monopolyapp/room.html', {
+            'title': title,
+            'room_id': room_id,
+            'parent': line_id,
+        })
