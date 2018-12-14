@@ -5,11 +5,13 @@
 
 {% block body %}
 
-  <form id="form" method="post" action="{% url 'make-room' %}">
+  <h1>ルーム{{ room_id|slice:":6" }}に入る</h1>
+  <form id="form" method="post" action="{% url 'join-room' %}">
     {% csrf_token %}
     <input id="room-id" type="hidden" name="room-id" value={{ room_id }}>
     <input id="line-id" type="hidden" name="line-id" value="">
     <input id="line-name" type="hidden" name="line-name" value="">
+    <input type="submit" value="参加">
   </form>
   <script>
       liff.init(data=>{
@@ -17,7 +19,6 @@
           const lineName = data.context.displayName;
           document.getElementById('line-id').setAttribute('value', lineId);
           document.getElementById('line-name').setAttribute('value', lineName);
-          document.getElementById('form').submit();
       },err=>{});
   </script>
 

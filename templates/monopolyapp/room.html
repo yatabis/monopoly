@@ -5,7 +5,7 @@
 
 {% block body %}
 
-<h1>ルーム{{ room_id }}に入る</h1>
+<h1>ルーム{{ room_id|slice:":6" }}</h1>
 <img src="{% static 'room' %}/{{ room_id }}.png" width="300" height="300">
 <h1>参加プレイヤー</h1>
 <p>親　{{ parent }}</p>

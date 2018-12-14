@@ -25,17 +25,32 @@ def line_callback(request):
 
 def make_room(request):
     if request.method == 'GET':
+        title = "部屋を作成"
         room_id = set_new_room()
-        return render(request, 'monopolyapp/make-room.html', {'room_id': room_id})
+        return render(request, 'monopolyapp/make-room.html', {'title': title, 'room_id': room_id})
     elif request.method == 'POST':
         title = "部屋を作成"
-        line_id = request.POST['line-id']
         room_id = request.POST['room-id']
+        line_id = request.POST['line-id']
+        line_name = request.POST['line-name']
         created_room = Room.objects.filter(room_id=room_id)
         created_room.update(parent=line_id)
-        Player.objects.create(line_id=line_id, room_id=created_room.get(), position='parent')
+        Player.objects.create(line_id=line_id, line_name=line_name, room_id=created_room.get(), position='parent')
         return render(request, 'monopolyapp/room.html', {
             'title': title,
             'room_id': room_id,
-            'parent': line_id,
+            'parent': line_name,
         })
+
+
+def join_room(request):
+    if request.method == 'GET':
+        title = "部屋に入る"
+        room_id = request.GET['room']
+        return render(request, 'monopolyapp/join-room.html', {'title': title, 'room_id': room_id})
+    elif request.method == 'POST':
+        title = "部屋に入る"
+        room_id = request.POST['room-id']
+        line_id = request.POST['line-id']
+        line_name = request.POST['line-name']
+        return render(request, 'monopolyapp/joined.html', {'title': title, 'room_id': room_id})

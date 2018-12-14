@@ -1,0 +1,14 @@
+{% extends 'monopolyapp/liff-base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+  <h1>ルーム{{ room_id|slice:":6" }}に入る</h1>
+  <script>
+      liff.init(data=>{},err=>{});
+      liff.closeWindow();
+  </script>
+
+{% endblock %}
