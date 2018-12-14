@@ -30,7 +30,7 @@ def make_room(request):
     elif request.method == 'POST':
         title = "部屋を作成"
         line_id = request.POST['line-id']
-        room_id = request.POST['room_id']
+        room_id = request.POST['room-id']
         Player.objects.create(line_id=line_id, room_id=room_id, position='parent')
         Room.objects.filter(room_id=room_id).update(parent=line_id)
         return render(request, 'monopolyapp/room.html', {
