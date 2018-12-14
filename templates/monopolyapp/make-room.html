@@ -5,14 +5,18 @@
 
 {% block body %}
 
-  <form id="form" method="post" action="{% url 'make-room' room_id %}">
+  <form id="form" method="post" action="{% url 'make-room' %}">
     {% csrf_token %}
     <input id="input" type="hidden" name="line-id" value="">
+    <input id="input" type="hidden" name="room-id" value={{ room_id }}>
   </form>
   <script>
-  let input = document.getElementById('input');
-  input.setAttribute('value', lineId);
-  document.getElementById('form').submit();
+      liff.init(data=>{
+          const lineId = data.context.userId;
+          let input = document.getElementById('input');
+          input.setAttribute('value', lineId);
+          document.getElementById('form').submit();
+      },err=>{});
   </script>
 
 {% endblock %}

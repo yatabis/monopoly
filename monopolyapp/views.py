@@ -23,13 +23,14 @@ def line_callback(request):
                 reply_text(reply_token, "メッセージの返答には対応していません。")
 
 
-def make_room(request, room_id=None):
-    if room_id is None:
+def make_room(request):
+    if request.method == 'GET':
         room_id = set_new_room()
         return render(request, 'monopolyapp/make-room.html', {'room_id': room_id})
-    else:
+    elif request.method == 'POST':
         title = "部屋を作成"
-        line_id = request['line-id']
+        line_id = request.POST['line-id']
+        room_id = request.POST['room_id']
         Player.objects.create(line_id=line_id, room_id=room_id, position='parent')
         Room.objects.filter(room_id=room_id).update(parent=line_id)
         return render(request, 'monopolyapp/room.html', {
