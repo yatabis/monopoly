@@ -16,3 +16,4 @@ def set_new_room():
     room_qr = qrcode.make(room_id)
     room_qr.save(f'{STATICFILES_DIRS[0]}/room/{room_id}.png')
     Room.objects.create(room_id=room_id)
+    return room_id
