@@ -7,8 +7,7 @@
 
   <h1>ルーム{{ room_id|slice:":6" }}に入る</h1>
   <script>
-      liff.init(data=>{},err=>{});
-      liff.closeWindow();
+      liff.init(data=>{},err=>{}).then(liff.closeWindow());
   </script>
 
 {% endblock %}
