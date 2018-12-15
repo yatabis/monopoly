@@ -26,7 +26,7 @@
           const lineId = data.context.userId;
           const lineName = data.context.displayName;
           const player = fetchGet("https://monopolyapp.herokuapp.com/api/players?line_id=" + lineId);
-          if ((Object.keys(player).length === 1) || (player.room_id === "") {
+          if ((Object.keys(player).length === 1) || (player.room_id === "")) {
               fetchPost("http://monopolyapp.herokuapp.com/api/players",
                   {
                       'line_id': lineId,
