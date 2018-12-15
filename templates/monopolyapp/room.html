@@ -15,7 +15,14 @@
 
   <script>
       const fetchGet = (ep) => {
-          fetch(ep).then(response => response.json()).then(text => {return text})
+          // fetch(ep).then(response => response.json()).then(text => {return text});
+          let req = new XMLHttpRequest();
+          req.open("GET", ep);
+          req.responseType = "json";
+          req.send();
+          req.onload = () => {
+              return req.response;
+          }
       };
 
       const updatePlayers = () => {

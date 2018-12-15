@@ -6,20 +6,42 @@
 {% block body %}
   <script>
       const fetchGet = (ep) => {
-          fetch(ep).then(response => response.json()).then(text => {return text})
+          // fetch(ep).then(response => response.json()).then(text => {return text})
+          let req = new XMLHttpRequest();
+          req.open("GET", ep);
+          req.responseType = "json";
+          req.send();
+          req.onload = () => {
+              return req.response;
+          }
       };
 
       const fetchPost = (ep, body) => {
-          fetch(ep, {method: "POST", body: JSON.stringify(body)}).then(response => response.json()).then(text => {return text})
+          // fetch(ep, {method: "POST", body: JSON.stringify(body)}).then(response => response.json()).then(text => {return text})
+          let req = new XMLHttpRequest();
+          req.open("POST", ep);
+          req.responseType = "json";
+          req.send(JSON.stringify(body));
+          req.onload = () => {
+              return req.response;
+          }
       };
 
       const pushLINE = (to, text) => {
           const ep = "https://api.line.me/v2/bot/message/push";
-          fetch(ep, {
+          /* fetch(ep, {
               method: "POST",
-              headers: JSON.stringify({{ header }}),
+              headers: JSON.stringify({/{ header }}),
               body: JSON.stringify({'type': 'text', 'text': text})
-          }).then(response => response.status).then(text => {return text})
+          }).then(response => response.status).then(text => {return text}) */
+          let req = new XMLHttpRequest();
+          req.open("POST", ep);
+          req.responseType = "json";
+          req.setRequestHeader(JSON.stringify({{ header }}));
+          req.send(JSON.stringify({'type': 'text', 'text': text}));
+          req.onload = () => {
+              return req.response;
+          }
       };
 
       liff.init(data=>{
