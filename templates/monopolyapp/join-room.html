@@ -4,21 +4,40 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-
-  <h1>ルーム{{ room_id|slice:":6" }}に入る</h1>
-  <form id="form" method="post" action="{% url 'join-room' %}">
-    {% csrf_token %}
-    <input id="room-id" type="hidden" name="room-id" value={{ room_id }}>
-    <input id="line-id" type="hidden" name="line-id" value="">
-    <input id="line-name" type="hidden" name="line-name" value="">
-    <input type="submit" value="参加">
-  </form>
   <script>
+      const fetchGet = (ep) => {
+          fetch(ep).then(response => response.json()).then(text => {return text})
+      };
+
+      const fetchPost = (ep, body) => {
+          fetch(ep, {method: "POST", body: JSON.stringify(body)}).then(response => response.json()).then(text => {return text})
+      };
+
+      const pushLINE = (to, text) => {
+          const ep = "https://api.line.me/v2/bot/message/push";
+          fetch(ep, {
+              method: "POST",
+              headers: JSON.stringify({{ header }}),
+              body: JSON.stringify({'type': 'text', 'text': text})
+          }).then(response => response.status).then(text => {return text})
+      };
+
       liff.init(data=>{
           const lineId = data.context.userId;
           const lineName = data.context.displayName;
-          document.getElementById('line-id').setAttribute('value', lineId);
-          document.getElementById('line-name').setAttribute('value', lineName);
+          const player = fetchGet("https://monopolyapp.herokuapp.com/api/players?line_id=" + lineId);
+          if ((Object.keys(player).length === 1) || (player.room_id === "") {
+              fetchPost("http://monopolyapp.herokuapp.com/api/players",
+                  {
+                      'line_id': lineId,
+                      'line_name': lineName,
+                      'room_id': {{ room_id }}
+                  });
+              pushLINE(lineId, "ルーム" + {{ room_id|slice:":6" }} + "に入室しました。")
+          } else {
+              pushLINE(lineId, "予期せぬエラーが発生しました。")
+          }
+          liff.closeWindow();
       },err=>{});
   </script>
 
