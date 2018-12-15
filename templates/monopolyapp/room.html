@@ -5,10 +5,35 @@
 
 {% block body %}
 
-<h1>ルーム{{ room_id|slice:":6" }}</h1>
-<img src="{% static 'room' %}/{{ room_id }}.png" width="300" height="300">
-<h1>参加プレイヤー</h1>
-<p>親　{{ parent }}</p>
-<input type="button" value="このメンバーでプレイ" onclick="liff.closeWindow()">
+  <h1>ルーム{{ room_id|slice:":6" }}</h1>
+  <img src="{% static 'room' %}/{{ room_id }}.png" width="300" height="300">
+  <h1>参加プレイヤー</h1>
+  <div id="players">
+    <p>親 {{ parent }}</p>
+  </div>
+  <input type="button" value="このメンバーでプレイ" onclick="liff.closeWindow()">
+
+  <script>
+      const fetchGet = (ep) => {
+          fetch(ep).then(response => response.json()).then(text => {return text})
+      };
+
+      const updatePlayers = () => {
+          let players = fetchGet("https://monopolyapp.herokuapp.com/api/players?room_id={{ room_id }}");
+          let i = 0;
+          for (let player in players) {
+              let p = document.createElement('p');
+              if (player.position === 'parent') {
+                  p.innerText = "親　";
+              } else if (player.position === 'child') {
+                  p.innerText = "子" + i + "　";
+              }
+              p.innerText += player.line_name;
+              document.getElementById("players").appendChild(p);
+              i ++;
+          }
+      };
+      setInterval(updatePlayers, 1000);
+  </script>
 
 {% endblock %}

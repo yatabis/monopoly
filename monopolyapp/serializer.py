@@ -12,4 +12,4 @@ class RoomSerializer(serializers.ModelSerializer):
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ('line_id', 'line_name', 'room_id', 'money', 'deal')
+        fields = ('line_id', 'line_name', 'room_id', 'position', 'money', 'deal')
