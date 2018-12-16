@@ -5,7 +5,7 @@ from rest_framework import viewsets, filters
 from .models import Room, Player
 from .serializer import RoomSerializer, PlayerSerializer
 from .functions import create_room, set_new_room, get_rooms
-from .line import reply_text, push_text, HEADER
+from .line import reply_text, push_text, get_user_name, HEADER
 
 # Create your views here.
 
@@ -35,7 +35,7 @@ def make_room(request):
         title = "部屋を作成"
         room_id = request.POST['room-id']
         line_id = request.POST['line-id']
-        line_name = request.POST['line-name']
+        line_name = get_user_name(line_id)
         created_room = Room.objects.filter(room_id=room_id)
         created_room.update(parent=line_id)
         if Player.objects.filter(line_id=line_id).exists():

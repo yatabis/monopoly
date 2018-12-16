@@ -9,25 +9,10 @@
     {% csrf_token %}
     <input id="room-id" type="hidden" name="room-id" value={{ room_id }}>
     <input id="line-id" type="hidden" name="line-id" value="">
-    <input id="line-name" type="hidden" name="line-name" value="">
   </form>
   <script>
-      const output = (log) => {
-          document.querySelector('body')[0].innerText += log;
-      };
-
       liff.init(data=>{
-          const lineId = data.context.userId;
-          let lineName = "";
-          liff.getProfile().then(profile => {
-              alert(profile.displayName);
-              lineName = profile.displayName;
-          }).catch(err => {
-              output("ブロファイル情報の取得に失敗しました。" + err);
-              liff.closeWindow();
-          });
-          document.getElementById('line-id').setAttribute('value', lineId);
-          document.getElementById('line-name').setAttribute('value', lineName);
+          document.getElementById('line-id').setAttribute('value', data.context.userId);
           document.getElementById('form').submit();
       },err=>{});
   </script>

@@ -16,3 +16,9 @@ def reply_text(token, text):
 def push_text(to, text):
     body = {'to': to, 'messages': [{'type': 'text', 'text': text}]}
     requests.post(PUSH_EP, json.dumps(body, ensure_ascii=False).encode('utf-8'), headers=HEADER)
+
+
+def get_user_name(user_id):
+    ep = f"https://api.line.me/v2/bot/profile/{user_id}"
+    req = requests.get(ep, headers=HEADER)
+    return req.json().get('displayName')
