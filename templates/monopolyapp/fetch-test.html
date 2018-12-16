@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=750px, user-scalable=no">
+  <title>fetchのテスト</title>
+</head>
+
+<body>
+<h1>参加プレイヤー</h1>
+<div id="players">
+  <p>親 {{ parent }}</p>
+</div>
+
+<script>
+    const fetchGet = (ep) => {
+        fetch(ep).then(response => response.json()).then(text => {return text});
+    };
+
+    const updatePlayers = () => {
+        let players = fetchGet("https://monopolyapp.herokuapp.com/api/players?room_id=njrlmwi0zmytzjzhms00n2u1ltgzzwytzji4mwmynwnintrl");
+        let i = 0;
+        for (let player in players) {
+            let p = document.createElement('p');
+            if (player.position === 'parent') {
+                p.innerText = "親　";
+            } else if (player.position === 'child') {
+                p.innerText = "子" + i + "　";
+            }
+            p.innerText += player.line_name;
+            document.getElementById("players").appendChild(p);
+            i ++;
+        }
+    };
+    setInterval(updatePlayers, 1000);
+</script>
+</body>
+
+</html>
