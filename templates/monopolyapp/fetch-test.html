@@ -14,30 +14,31 @@
 </div>
 
 <script>
-    const appendPlayer = (position, name) => {
-
-    };
-
-    const updatePlayer = (players) => {
-        let i = 0;
-        for (let player of players) {
-            let p = document.createElement('p');
-            if (player.position === 'parent') {
-                p.innerText = "親　";
-            } else if (player.position === 'child') {
-                p.innerText = "子" + i + "　";
+    const updatePlayers = (players) => {
+        let playersNum = document.getElementById('players').childElementCount;
+        if (Object.keys(players).length === playersNum) {
+            let wrapper = document.getElementById('players');
+            while (wrapper.firstChild) element.removeChild(wrapper.firstChild);
+            let i = 0;
+            for (let player of players) {
+                let p = document.createElement('p');
+                if (player.position === 'parent') {
+                    p.innerText = "親　";
+                } else if (player.position === 'child') {
+                    p.innerText = "子" + i + "　";
+                }
+                p.innerText += player.line_name;
+                wrapper.appendChild(p);
+                i++;
             }
-            p.innerText += player.line_name;
-            document.getElementById("players").appendChild(p);
-            i ++;
         }
     };
 
-    const fetchPlayer = () => {
+    const fetchPlayers = () => {
         let ep = "https://monopolyapp.herokuapp.com/api/players?room_id=njrlmwi0zmytzjzhms00n2u1ltgzzwytzji4mwmynwnintrl&format=json";
-        fetch(ep).then(response => response.json()).then(json => updatePlayer(json));
+        fetch(ep).then(response => response.json()).then(json => updatePlayers(json));
     };
-    setInterval(fetchPlayer, 1000);
+    setInterval(fetchPlayers, 1000);
 </script>
 </body>
 

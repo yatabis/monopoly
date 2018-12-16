@@ -11,36 +11,38 @@
   <div id="players">
     <p>親 {{ parent }}</p>
   </div>
-  <input type="button" value="このメンバーでプレイ" onclick="liff.closeWindow()">
+  <input type="button" value="このメンバーでプレイ" onclick="gameStart()">
 
   <script>
-      const fetchGet = (ep) => {
-          // fetch(ep).then(response => response.json()).then(text => {return text});
-          let req = new XMLHttpRequest();
-          req.open("GET", ep);
-          req.responseType = "json";
-          req.send();
-          req.onload = () => {
-              return req.response;
-          }
+      const gameStart = () => {
+          liff.closeWindow();
       };
 
-      const updatePlayers = () => {
-          let players = fetchGet("https://monopolyapp.herokuapp.com/api/players?room_id={{ room_id }}");
-          let i = 0;
-          for (let player in players) {
-              let p = document.createElement('p');
-              if (player.position === 'parent') {
-                  p.innerText = "親　";
-              } else if (player.position === 'child') {
-                  p.innerText = "子" + i + "　";
-              }
-              p.innerText += player.line_name;
-              document.getElementById("players").appendChild(p);
-              i ++;
-          }
-      };
-      setInterval(updatePlayers, 1000);
+      const updatePlayers = (players) => {
+        let playersNum = document.getElementById('players').childElementCount;
+        if (Object.keys(players).length === playersNum) {
+            let wrapper = document.getElementById('players');
+            while (wrapper.firstChild) element.removeChild(wrapper.firstChild);
+            let i = 0;
+            for (let player of players) {
+                let p = document.createElement('p');
+                if (player.position === 'parent') {
+                    p.innerText = "親　";
+                } else if (player.position === 'child') {
+                    p.innerText = "子" + i + "　";
+                }
+                p.innerText += player.line_name;
+                wrapper.appendChild(p);
+                i++;
+            }
+        }
+    };
+
+    const fetchPlayers = () => {
+        let ep = "https://monopolyapp.herokuapp.com/api/players?format=json&room_id=" + {{ room_id }};
+        fetch(ep).then(response => response.json()).then(json => updatePlayers(json));
+    };
+    setInterval(fetchPlayers, 1000);
   </script>
 
 {% endblock %}

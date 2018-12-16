@@ -9,7 +9,8 @@ urlpatterns = [
     path('callback/', line_callback, name='callback'),
     path('make-room/', make_room, name='make-room'),
     path('join-room/', join_room, name='join-room'),
-    path('fetch-test/', fetch_test)
+    path('debug/rooms/'),
+    path('debug/fetch-test/', fetch_test)
 ]
 
 router = routers.DefaultRouter()
