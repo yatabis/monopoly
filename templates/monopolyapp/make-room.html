@@ -22,7 +22,7 @@
           liff.getProfile().then(profile => {
               output(profile.displayName);
               lineName = profile.displayName;
-          }).cache(err => {
+          }).catch(err => {
               output("ブロファイル情報の取得に失敗しました。" + err);
               liff.closeWindow();
           });
