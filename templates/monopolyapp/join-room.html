@@ -4,6 +4,8 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
+  This is join-room.html
+  <p id="message"></p>
   <script>
       const pushLINE = (to, text) => {
           const ep = "https://api.line.me/v2/bot/message/push";
@@ -14,17 +16,19 @@
           }).then(response => response.status)
       };
 
-      alert('これからLIFFを初期化します。');
+      document.getElementById('message').innerText += 'これからLIFFを初期化します。';
       liff.init(data=>{
-          alert('LIFFの初期化に成功しました。');
+          document.getElementById('message').innerText += 'LIFFの初期化に成功しました。';
           const lineId = data.context.userId;
           const ep = "https://monopolyapp.herokuapp.com/api/players?line_id=" + lineId;
           fetch(ep).then(res => res.json()).then(player => {
+              document.getElementById('message').innerText += player;
               alert(player);
               pushLINE(lineId, String(player));
               if ((Object.keys(player).length === 1) || (player.room_id === "")) {
                   const ep = "https://api.line.me/v2/bot/profile/" + userId;
                   fetch(ep, {headers: {{ header }}}).then(res => res.json()).then(lineName => {
+                      document.getElementById('message').innerText += lineName;
                       alert(lineName);
                       pushLINE(lineId, 'lineName: ' + lineName);
                       const ep = "http://monopolyapp.herokuapp.com/api/players";
