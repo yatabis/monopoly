@@ -6,6 +6,7 @@ from .models import Room, Player
 from .serializer import RoomSerializer, PlayerSerializer
 from .functions import create_room, set_new_room, get_rooms
 from .line import reply_text, push_text, get_user_name, HEADER
+import json
 
 # Create your views here.
 
@@ -65,7 +66,8 @@ def join_room(request):
     if request.method == 'GET':
         title = "部屋に入る"
         room_id = request.GET['room']
-        return render(request, 'monopolyapp/join-room.html', {'title': title, 'room_id': room_id, 'header': HEADER})
+        return render(request, 'monopolyapp/join-room.html',
+                      {'title': title, 'room_id': room_id, 'header': json.dumps(HEADER)})
     elif request.method == 'POST':
         title = "部屋に入る"
         room_id = request.POST['room-id']

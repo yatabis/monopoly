@@ -11,7 +11,7 @@
           const ep = "https://api.line.me/v2/bot/message/push";
           fetch(ep, {
               method: "POST",
-              headers: JSON.stringify({{ header }}),
+              headers: {{ header }},
               body: JSON.stringify({'type': 'text', 'text': text})
           }).then(response => response.status)
       };
@@ -27,7 +27,7 @@
               pushLINE(lineId, String(player));
               if ((Object.keys(player).length === 1) || (player.room_id === "")) {
                   const ep = "https://api.line.me/v2/bot/profile/" + userId;
-                  fetch(ep, {headers: JSON.stringify({{ header }})}).then(res => res.json()).then(lineName => {
+                  fetch(ep, {headers: {{ header }}}).then(res => res.json()).then(lineName => {
                       document.getElementById('message').innerText += lineName;
                       alert(lineName);
                       pushLINE(lineId, 'lineName: ' + lineName);
