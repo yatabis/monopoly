@@ -18,6 +18,8 @@
           liff.getProfile().then(profile => {
               alert(profile.displayName);
               lineName = profile.displayName;
+          }).cache(err => {
+              alert("ブロファイル情報の取得に失敗しました。" + err);
           });
           document.getElementById('line-id').setAttribute('value', lineId);
           document.getElementById('line-name').setAttribute('value', lineName);
