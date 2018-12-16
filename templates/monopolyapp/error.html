@@ -4,5 +4,5 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-  <script>liff.closeWindow()</script>
+  <script>liff.init(data => {liff.closeWindow()})</script>
 {% endblock %}

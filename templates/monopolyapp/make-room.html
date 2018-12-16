@@ -20,7 +20,7 @@
           const lineId = data.context.userId;
           let lineName = "";
           liff.getProfile().then(profile => {
-              output(profile.displayName);
+              alert(profile.displayName);
               lineName = profile.displayName;
           }).catch(err => {
               output("ブロファイル情報の取得に失敗しました。" + err);
