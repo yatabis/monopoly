@@ -41,7 +41,7 @@
       liff.init(data=>{
           const lineId = data.context.userId;
           const ep = "https://monopolyapp.herokuapp.com/api/players?format=json&line_id=" + lineId;
-          fetch(ep).then(res => res.json()).then(player => loginPlayer(lineId, JSON.stringify(player))).cache(err => {
+          fetch(ep).then(res => res.json()).then(player => loginPlayer(lineId, player[0])).cache(err => {
               alert("ブロファイル情報の取得に失敗しました。" + err);
           });
           liff.closeWindow();
