@@ -15,7 +15,8 @@
       liff.init(data=>{
           const lineId = data.context.userId;
           let lineName = "";
-          liff.getProfile().then(function (profile) {
+          liff.getProfile().then(profile => {
+              alert(profile.displayName);
               lineName = profile.displayName;
           });
           document.getElementById('line-id').setAttribute('value', lineId);
