@@ -80,3 +80,8 @@ class PlayerViewSets(viewsets.ModelViewSet):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
     filter_fields = ('room_id', 'line_id', 'position')
+
+
+# test
+def fetch_test(request):
+    return render(request, 'monopolyapp/fetch-test.html')
