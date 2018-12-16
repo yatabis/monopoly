@@ -1,4 +1,5 @@
 from base64 import b64encode
+import os
 from uuid import uuid4
 
 import qrcode
@@ -17,3 +18,7 @@ def set_new_room():
     room_qr.save(f'{STATICFILES_DIRS[0]}/room/{room_id}.png')
     Room.objects.create(room_id=room_id)
     return room_id
+
+
+def get_rooms():
+    return os.listdir(f'{STATICFILES_DIRS[0]}/room')
