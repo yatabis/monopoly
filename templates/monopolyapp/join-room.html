@@ -30,10 +30,15 @@
           alert(JSON.stringify(player));
           pushLINE(lineId, JSON.stringify(player));
           if ((Object.keys(player).length === 1) || (player.room_id === "")) {
+              alert(player.room_id);
+              document.getElementById('message').innerText += Object.keys(player).length;
+              document.getElementById('message').innerText += player.room_id;
               const ep = "https://api.line.me/v2/bot/profile/" + userId;
               fetch(ep, {headers: {Authorization: 'Bearer {{ header }}'}})
                   .then(res => res.json()).then(lineName => register(lineId, lineName))
           } else {
+              alert("予期せぬエラーが発生しました。");
+              document.getElementById('message').innerText += "予期せぬエラーが発生しました。";
               pushLINE(lineId, "予期せぬエラーが発生しました。")
           }
       };
