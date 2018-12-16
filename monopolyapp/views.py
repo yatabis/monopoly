@@ -70,7 +70,7 @@ def join_room(request):
         title = "部屋に入る"
         room_id = request.POST['room-id']
         line_id = request.POST['line-id']
-        line_name = request.POST['line-name']
+        line_name = get_user_name(line_id)
         Player.objects.create(line_id=line_id, line_name=line_name, room_id=room_id)
         push_text(line_id, f"ルーム{room_id[:6]}に入室しました。")
         return render(request, 'monopolyapp/joined.html', {'title': title, 'room_id': room_id})
