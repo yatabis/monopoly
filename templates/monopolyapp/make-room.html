@@ -16,10 +16,11 @@
           const lineId = data.context.userId;
           let lineName = "";
           liff.getProfile().then(profile => {
-              alert(profile.displayName);
+              // alert(profile.displayName);
               lineName = profile.displayName;
           }).cache(err => {
               alert("ブロファイル情報の取得に失敗しました。" + err);
+              liff.closeWindow();
           });
           document.getElementById('line-id').setAttribute('value', lineId);
           document.getElementById('line-name').setAttribute('value', lineName);
