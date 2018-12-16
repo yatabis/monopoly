@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=750px, user-scalable=no">
+  <!--link rel="stylesheet" href="main.css"-->
+  <!--script src="main.js"></script-->
+  <title>部屋ディレクトリ</title>
+</head>
+
+<body>
+{% for room in rooms %}
+  <p>{{ room }}</p><br>
+{% endfor %}
+</body>
+
+</html>

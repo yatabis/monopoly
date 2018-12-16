@@ -4,7 +4,7 @@ from rest_framework import viewsets, filters
 
 from .models import Room, Player
 from .serializer import RoomSerializer, PlayerSerializer
-from .functions import create_room, set_new_room
+from .functions import create_room, set_new_room, get_rooms
 from .line import reply_text, push_text, HEADER
 
 # Create your views here.
@@ -85,3 +85,8 @@ class PlayerViewSets(viewsets.ModelViewSet):
 # test
 def fetch_test(request):
     return render(request, 'monopolyapp/fetch-test.html')
+
+
+def show_rooms(request):
+    rooms = get_rooms()
+    return render(request, 'monopolyapp/show-rooms.html', {'rooms': rooms})
