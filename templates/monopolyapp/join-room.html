@@ -4,10 +4,8 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-  This is join-room.html
   <p id="message"></p>
   <script>
-      document.getElementById('message').innerText = "Are you OK?";
       const pushLINE = (to, text) => {
           const ep = "https://api.line.me/v2/bot/message/push";
           fetch(ep, {
@@ -17,34 +15,37 @@
           }).then(response => response.status)
       };
 
-      document.getElementById('message').innerText += 'これからLIFFを初期化します。';
-      liff.init(data=>{
-          document.getElementById('message').innerText += 'LIFFの初期化に成功しました。';
-          const lineId = data.context.userId;
-          const ep = "https://monopolyapp.herokuapp.com/api/players?line_id=" + lineId;
-          fetch(ep).then(res => res.json()).then(player => {
-              document.getElementById('message').innerText += player;
-              alert(player);
-              pushLINE(lineId, String(player));
-              if ((Object.keys(player).length === 1) || (player.room_id === "")) {
-                  const ep = "https://api.line.me/v2/bot/profile/" + userId;
-                  fetch(ep, {headers: {Authorization: 'Bearer {{ header }}'}}).then(res => res.json()).then(lineName => {
-                      document.getElementById('message').innerText += lineName;
-                      alert(lineName);
-                      pushLINE(lineId, 'lineName: ' + lineName);
-                      const ep = "http://monopolyapp.herokuapp.com/api/players";
-                      const body = {'line_id': lineId, 'line_name': lineName, 'room_id': {{ room_id }}};
-                      fetch(ep, {method: "POST", body: JSON.stringify(body)}).then(res => res.status);
-                      pushLINE(lineId, "ルーム" + {{ room_id|slice:":6" }} + "に入室しました。");
-                  })
-              } else {
-                  pushLINE(lineId, "予期せぬエラーが発生しました。")
-              }
-          }).cache(err => {
-              alert("ブロファイル情報の取得に失敗しました。" + err);
-          });
-          liff.closeWindow();
-      },err=>{});
+      const register = (lineId, lineName) => {
+          document.getElementById('message').innerText += lineName;
+          alert(lineName);
+          pushLINE(lineId, 'lineName: ' + lineName);
+          const ep = "http://monopolyapp.herokuapp.com/api/players";
+          const body = {'line_id': lineId, 'line_name': lineName, 'room_id': {{ room_id }}};
+          fetch(ep, {method: "POST", body: JSON.stringify(body)}).then(res => res.status);
+          pushLINE(lineId, "ルーム" + {{ room_id|slice:":6" }} + "に入室しました。");
+      };
+
+      const loginPlayer = (lineId, player) => {
+          document.getElementById('message').innerText += player;
+          alert(player);
+          pushLINE(lineId, String(player));
+          if ((Object.keys(player).length === 1) || (player.room_id === "")) {
+              const ep = "https://api.line.me/v2/bot/profile/" + userId;
+              fetch(ep, {headers: {Authorization: 'Bearer {{ header }}'}})
+                  .then(res => res.json()).then(lineName => register(lineId, lineName))
+          } else {
+              pushLINE(lineId, "予期せぬエラーが発生しました。")
+          }
+      };
+
+          liff.init(data=>{
+              const lineId = data.context.userId;
+              const ep = "https://monopolyapp.herokuapp.com/api/players?line_id=" + lineId;
+              fetch(ep).then(res => res.json()).then(player => loginPlayer(lineId, player)).cache(err => {
+                  alert("ブロファイル情報の取得に失敗しました。" + err);
+              });
+              liff.closeWindow();
+          },err=>{});
   </script>
 
 {% endblock %}
