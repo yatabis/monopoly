@@ -42,16 +42,22 @@ def make_room(request):
             if Player.objects.filter(line_id=line_id).get().room_id == "":
                 Player.objects.filter(line_id=line_id).update(
                     room_id=created_room.get(), position='parent', money=2000000, deal='free')
+                return render(request, 'monopolyapp/room.html', {
+                    'title': title,
+                    'room_id': room_id,
+                    'parent': line_name,
+                })
             else:
                 push_text(line_id, "予期せぬエラーが発生しました。")
+                return render(request, 'monopolyapp/error.html', {'title': "予期せぬエラーが発生しました。"})
         else:
             Player.objects.create(line_id=line_id, line_name=line_name, room_id=created_room.get(), position='parent')
             push_text(line_id, f"ルーム{room_id[:6]}を作成しました。")
-        return render(request, 'monopolyapp/room.html', {
-            'title': title,
-            'room_id': room_id,
-            'parent': line_name,
-        })
+            return render(request, 'monopolyapp/room.html', {
+                'title': title,
+                'room_id': room_id,
+                'parent': line_name,
+            })
 
 
 def join_room(request):
