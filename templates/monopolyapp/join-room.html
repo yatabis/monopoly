@@ -11,7 +11,7 @@
           fetch(ep, {
               method: "POST",
               headers: {'Authorization': 'Bearer {{ header }}'},
-              body: JSON.stringify({'type': 'text', 'text': text})
+              body: JSON.stringify({'to': to, 'messages': [{'type': 'text', 'text': text}]})
           }).then(response => response.status)
       };
 
@@ -38,14 +38,14 @@
           }
       };
 
-          liff.init(data=>{
-              const lineId = data.context.userId;
-              const ep = "https://monopolyapp.herokuapp.com/api/players?line_id=" + lineId;
-              fetch(ep).then(res => res.json()).then(player => loginPlayer(lineId, player)).cache(err => {
-                  alert("ブロファイル情報の取得に失敗しました。" + err);
-              });
-              liff.closeWindow();
-          },err=>{});
+      liff.init(data=>{
+          const lineId = data.context.userId;
+          const ep = "https://monopolyapp.herokuapp.com/api/players?line_id=" + lineId;
+          fetch(ep).then(res => res.json()).then(player => loginPlayer(lineId, player)).cache(err => {
+              alert("ブロファイル情報の取得に失敗しました。" + err);
+          });
+          liff.closeWindow();
+      },err=>{});
   </script>
 
 {% endblock %}
