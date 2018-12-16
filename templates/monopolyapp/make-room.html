@@ -12,14 +12,18 @@
     <input id="line-name" type="hidden" name="line-name" value="">
   </form>
   <script>
+      const output = (log) => {
+          document.querySelector('body')[0].innerText += log;
+      };
+
       liff.init(data=>{
           const lineId = data.context.userId;
           let lineName = "";
           liff.getProfile().then(profile => {
-              // alert(profile.displayName);
+              output(profile.displayName);
               lineName = profile.displayName;
           }).cache(err => {
-              alert("ブロファイル情報の取得に失敗しました。" + err);
+              output("ブロファイル情報の取得に失敗しました。" + err);
               liff.closeWindow();
           });
           document.getElementById('line-id').setAttribute('value', lineId);
