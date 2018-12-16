@@ -18,9 +18,13 @@
           const lineId = data.context.userId;
           const ep = "https://monopolyapp.herokuapp.com/api/players?line_id=" + lineId;
           fetch(ep).then(res => res.json()).then(player => {
+              alert(player);
+              pushLINE(lineId, String(player));
               if ((Object.keys(player).length === 1) || (player.room_id === "")) {
                   const ep = "https://api.line.me/v2/bot/profile/" + userId;
                   fetch(ep, {headers: {{ header }}}).then(res => res.json()).then(lineName => {
+                      alert(lineName);
+                      pushLINE(lineId, 'lineName: ' + lineName);
                       const ep = "http://monopolyapp.herokuapp.com/api/players";
                       const body = {'line_id': lineId, 'line_name': lineName, 'room_id': {{ room_id }}};
                       fetch(ep, {method: "POST", body: JSON.stringify(body)}).then(res => res.status);
