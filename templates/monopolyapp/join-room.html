@@ -14,7 +14,9 @@
           }).then(response => response.status)
       };
 
+      alert('これからLIFFを初期化します。');
       liff.init(data=>{
+          alert('LIFFの初期化に成功しました。');
           const lineId = data.context.userId;
           const ep = "https://monopolyapp.herokuapp.com/api/players?line_id=" + lineId;
           fetch(ep).then(res => res.json()).then(player => {
