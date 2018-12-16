@@ -14,13 +14,13 @@
 </div>
 
 <script>
-    const fetchGet = (ep) => {
-        fetch(ep).then(response => response.json()).then(text => {return text});
+    const appendPlayer = (position, name) => {
+
     };
 
-    const updatePlayers = () => {
-        let players = fetchGet("https://monopolyapp.herokuapp.com/api/players?room_id=njrlmwi0zmytzjzhms00n2u1ltgzzwytzji4mwmynwnintrl&format=json");
+    const updatePlayer = (players) => {
         let i = 0;
+        alert(players);
         for (let player in players) {
             let p = document.createElement('p');
             if (player.position === 'parent') {
@@ -33,7 +33,12 @@
             i ++;
         }
     };
-    setInterval(updatePlayers, 1000);
+
+    const fetchPlayer = () => {
+        let ep = "https://monopolyapp.herokuapp.com/api/players?room_id=njrlmwi0zmytzjzhms00n2u1ltgzzwytzji4mwmynwnintrl&format=json";
+        fetch(ep).then(response => response.json()).then(json => updatePlayer(json));
+    };
+    setInterval(fetchPlayer, 1000);
 </script>
 </body>
 
