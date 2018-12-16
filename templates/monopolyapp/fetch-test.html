@@ -20,8 +20,7 @@
 
     const updatePlayer = (players) => {
         let i = 0;
-        alert(players);
-        for (let player in players) {
+        for (let player of players) {
             let p = document.createElement('p');
             if (player.position === 'parent') {
                 p.innerText = "親　";
