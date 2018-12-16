@@ -19,7 +19,7 @@
     };
 
     const updatePlayers = () => {
-        let players = fetchGet("https://monopolyapp.herokuapp.com/api/players?room_id=njrlmwi0zmytzjzhms00n2u1ltgzzwytzji4mwmynwnintrl");
+        let players = fetchGet("https://monopolyapp.herokuapp.com/api/players?room_id=njrlmwi0zmytzjzhms00n2u1ltgzzwytzji4mwmynwnintrl?format=json");
         let i = 0;
         for (let player in players) {
             let p = document.createElement('p');
