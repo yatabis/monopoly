@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=750px, user-scalable=no">
+  <title>fetchのテスト</title>
+</head>
+
+<body>
+<input type="submit" value="閉じる" onclick="window.close()">
+<script>
+    const userId = "U095f0aa6770163eea24cd39485e9b8b0";
+    const ep = "https://api.line.me/v2/bot/message/push";
+    const CAT = "PqkzEwZerG1Oy1DMwbsvZq78PvqnTol/4NMvbzuNm+tvSLHx9uJpbUNvNecY+Rn+xL/IanOdckVIKKlHZYAblf20PZz5HPfGtqylZM5zU05B/x0ehTjzc1W84FJ+wU6mZfkRP8COBC0d+NgUK6rt8gdB04t89/1O/w1cDnyilFU=";
+    const header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + CAT};
+    let user = "initial";
+    fetch(ep, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify({to: userId, messages: {type: 'text', text: 'CORSテスト'}}),
+        // mode: 'cors'
+    }).then(res => {
+        if (res.ok) {
+            alert(res.status);
+        } else {
+            alert(res.status + '\n' + res.statusText);
+            alert(JSON.stringify(res.headers));
+            alert(JSON.stringify(res.json()));
+        }
+    }).catch(err => {alert('fetch failed\n' + err);alert()});
+</script>
+</body>
+
+</html>
