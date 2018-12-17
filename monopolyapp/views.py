@@ -5,8 +5,7 @@ from rest_framework import viewsets, filters
 from .models import Room, Player
 from .serializer import RoomSerializer, PlayerSerializer
 from .functions import create_room, set_new_room, get_rooms
-from .line import reply_text, push_text, get_user_name, CAT
-import json
+from .line import reply_text, push_text, get_user_name
 
 # Create your views here.
 
@@ -89,6 +88,12 @@ class PlayerViewSets(viewsets.ModelViewSet):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
     filter_fields = ('room_id', 'line_id', 'position')
+
+
+def push_api(request):
+    to = request.POST.get('to')
+    text = request.POST.get('text')
+    push_text(to, text)
 
 
 # test

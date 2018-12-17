@@ -9,12 +9,10 @@
       const pushLINE = (to, text) => {
           alert("to: " + to);
           alert("text: " + text);
-          const ep = "https://api.line.me/v2/bot/message/push";
-          const message = [{type: 'text', text: text},];
+          const ep = '{% url 'push-line' %}';
           fetch(ep, {
               method: "POST",
-              headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer {{ header }}'},
-              body: JSON.stringify({to: to, messages: message})
+              body: JSON.stringify({to: to, text: text})
           })
           .then(response => {
               alert(response.status);
