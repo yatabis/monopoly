@@ -1,11 +1,10 @@
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_protect
 import django_filters
 from rest_framework import viewsets, filters
 
 from .models import Room, Player
 from .serializer import RoomSerializer, PlayerSerializer
-from .functions import create_room, set_new_room, get_rooms
+from .functions import create_room, set_new_room, get_rooms, parse_query
 from .line import reply_text, push_text, get_user_name, CAT
 
 # Create your views here.
@@ -91,10 +90,9 @@ class PlayerViewSets(viewsets.ModelViewSet):
     filter_fields = ('room_id', 'line_id', 'position')
 
 
-@csrf_protect
 def push_api(request):
-    to = request.POST.get('to')
-    text = request.POST.get('text')
+    query = request.GET['query']
+    to, text = parse_query(query)
     push_text(to, text)
 
 

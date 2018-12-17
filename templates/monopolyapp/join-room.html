@@ -6,18 +6,23 @@
 {% block body %}
   <p id="message"></p>
   <script>
+      const Base64 = {
+          encode: function(str) {
+              return btoa(unescape(encodeURIComponent(str)));
+          },
+          decode: function(str) {
+              return decodeURIComponent(escape(atob(str)));
+          }
+      };
       const pushLINE = (to, text) => {
           alert("to: " + to);
           alert("text: " + text);
-          const ep = '{% url 'push-line' %}';
-          fetch(ep, {
-              method: "POST",
-              body: JSON.stringify({to: to, text: text})
-          })
-              .then(response => {
-                  alert(response.status);
-                  alert(JSON.stringify(response.json()));
-              }).catch(err => {
+          const q = Base64.encode(JSON.stringify({to: to, text: text}));
+          const ep = '{% url 'push-line'%}?query=' + q;
+          fetch(ep).then(response => {
+              alert(response.status);
+              alert(JSON.stringify(response.json()));
+          }).catch(err => {
               alert("push LINE error");
               alert(err.toString());
           })

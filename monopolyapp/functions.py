@@ -1,4 +1,5 @@
-from base64 import b64encode
+from base64 import b64encode, b64decode
+import json
 import os
 from uuid import uuid4
 
@@ -22,3 +23,8 @@ def set_new_room():
 
 def get_rooms():
     return os.listdir(f'{STATICFILES_DIRS[0]}/room')
+
+
+def parse_query(query):
+    parsed = json.loads(b64decode(query))
+    return parsed.get('to'), parsed.get('text')
