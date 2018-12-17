@@ -8,37 +8,27 @@
 </head>
 
 <body>
-<h1>参加プレイヤー</h1>
-<div id="players">
-  <p>親 {{ parent }}</p>
-</div>
-
+<input type="submit" value="閉じる" onclick="window.close()">
 <script>
-    const updatePlayers = (players) => {
-        let playersNum = document.getElementById('players').childElementCount;
-        if (Object.keys(players).length === playersNum) {
-            let wrapper = document.getElementById('players');
-            while (wrapper.firstChild) element.removeChild(wrapper.firstChild);
-            let i = 0;
-            for (let player of players) {
-                let p = document.createElement('p');
-                if (player.position === 'parent') {
-                    p.innerText = "親　";
-                } else if (player.position === 'child') {
-                    p.innerText = "子" + i + "　";
-                }
-                p.innerText += player.line_name;
-                wrapper.appendChild(p);
-                i++;
-            }
+    const userId = "U095f0aa6770163eea24cd39485e9b8b0";
+    const ep = "https://api.line.me/v2/bot/message/push";
+    const CAT = "PqkzEwZerG1Oy1DMwbsvZq78PvqnTol/4NMvbzuNm+tvSLHx9uJpbUNvNecY+Rn+xL/IanOdckVIKKlHZYAblf20PZz5HPfGtqylZM5zU05B/x0ehTjzc1W84FJ+wU6mZfkRP8COBC0d+NgUK6rt8gdB04t89/1O/w1cDnyilFU=";
+    const header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + CAT};
+    let user = "initial";
+    fetch(ep, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify({to: userId, messages: {type: 'text', text: 'CORSテスト'}}),
+        // mode: 'cors'
+    }).then(res => {
+        if (res.ok) {
+            alert(res.status);
+        } else {
+            alert(res.status + '\n' + res.statusText);
+            alert(JSON.stringify(res.headers));
+            alert(JSON.stringify(res.json()));
         }
-    };
-
-    const fetchPlayers = () => {
-        let ep = "https://monopolyapp.herokuapp.com/api/players?room_id=njrlmwi0zmytzjzhms00n2u1ltgzzwytzji4mwmynwnintrl&format=json";
-        fetch(ep).then(response => response.json()).then(json => updatePlayers(json));
-    };
-    setInterval(fetchPlayers, 1000);
+    }).catch(err => {alert('fetch failed\n' + err);alert()});
 </script>
 </body>
 
