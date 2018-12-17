@@ -6,15 +6,18 @@
 {% block body %}
   <p id="message"></p>
   <script>
+      const line = require('@line/bot-sdk');
+
+      const client = new line.Client({
+          channelAccessToken: {{ header }}
+      });
+
       const pushLINE = (to, text) => {
           alert("to: " + to);
           alert("text: " + text);
-          const ep = "https://api.line.me/v2/bot/message/push";
-          fetch(ep, {
-              method: "POST",
-              headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer {{ header }}'},
-              body: JSON.stringify({'to': to, 'messages': [{'type': 'text', 'text': text}]})
-          }).then(response => {
+          const message = {'type': 'text', 'text': text}
+          client.pushMessage(to, message)
+          .then(response => {
               alert(response.status);
               alert(JSON.stringify(response.json()));
           }).catch(err => {
