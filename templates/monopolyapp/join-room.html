@@ -9,14 +9,9 @@
       const pushLINE = (to, text) => {
           alert("to: " + to);
           alert("text: " + text);
-          const csrftoken = getCookie('csrftoken');
           const ep = '{% url 'push-line' %}';
-          alert(csrftoken);
           fetch(ep, {
               method: "POST",
-              headers: {"X-CSRFToken": csrftoken,
-                  'Accept': 'application/json',
-                  'X-Requested-With': 'XMLHttpRequest'},
               body: JSON.stringify({to: to, text: text})
           })
               .then(response => {

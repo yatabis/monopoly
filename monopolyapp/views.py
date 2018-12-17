@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_protect
 import django_filters
 from rest_framework import viewsets, filters
 
@@ -90,6 +91,7 @@ class PlayerViewSets(viewsets.ModelViewSet):
     filter_fields = ('room_id', 'line_id', 'position')
 
 
+@csrf_protect
 def push_api(request):
     to = request.POST.get('to')
     text = request.POST.get('text')
