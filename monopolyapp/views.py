@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 import django_filters
 from rest_framework import viewsets, filters
 
@@ -94,6 +94,7 @@ def push_api(request):
     query = request.GET['query']
     to, text = parse_query(query)
     push_text(to, text)
+    return HttpResponse('200 OK')
 
 
 # test

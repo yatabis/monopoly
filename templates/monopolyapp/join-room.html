@@ -61,6 +61,7 @@
               const ep = "https://api.line.me/v2/bot/profile/" + userId;
               fetch(ep, {headers: {Authorization: 'Bearer {{ header }}'}})
                   .then(res => res.json()).then(lineName => register(lineId, lineName))
+                  .catch(err => {alert('ユーザープロファイル情報の取得に失敗しました。' + err)})
           } else {
               alert("予期せぬエラーが発生しました。");
               pushLINE(lineId, "予期せぬエラーが発生しました。")
