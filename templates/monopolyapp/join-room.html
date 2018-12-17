@@ -13,7 +13,7 @@
           fetch(ep, {
               method: "POST",
               headers: {'Authorization': 'Bearer {{ header }}'},
-              body: JSON.stringify({'to': to, 'messages': [{'type': 'text', 'text': text}]})
+              body: {'to': to, 'messages': [{'type': 'text', 'text': text}]}
           }).then(response => {
               alert(response.status);
               alert(JSON.stringify(response.json()));
