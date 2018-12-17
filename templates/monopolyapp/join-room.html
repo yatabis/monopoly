@@ -9,12 +9,13 @@
       const pushLINE = (to, text) => {
           alert("to: " + to);
           alert("text: " + text);
-          const line = require('@line/bot-sdk');
-          const client = new line.Client({
-              channelAccessToken: {{ header }}
-          });
-          const message = {type: 'text', text: text};
-          client.pushMessage(to, message)
+          const ep = "https://api.line.me/v2/bot/message/push";
+          const message = [{type: 'text', text: text},];
+          fetch(ep, {
+              method: "POST",
+              headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer {{ header }}'},
+              body: JSON.stringify({to: to, messages: message})
+          })
           .then(response => {
               alert(response.status);
               alert(JSON.stringify(response.json()));
