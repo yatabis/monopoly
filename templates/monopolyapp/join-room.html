@@ -12,6 +12,7 @@
           const ep = '{% url 'push-line' %}';
           fetch(ep, {
               method: "POST",
+              headers: {"X-CSRFToken": getCookie("csrftoken")},
               body: JSON.stringify({to: to, text: text})
           })
           .then(response => {
