@@ -5,7 +5,7 @@ from rest_framework import viewsets, filters
 from .models import Room, Player
 from .serializer import RoomSerializer, PlayerSerializer
 from .functions import create_room, set_new_room, get_rooms
-from .line import reply_text, push_text, get_user_name
+from .line import reply_text, push_text, get_user_name, CAT
 
 # Create your views here.
 
