@@ -7,8 +7,8 @@
   <p id="message"></p>
   <script>
       const pushLINE = (to, text) => {
-          alert(to);
-          alert(JSON.stringify(text));
+          alert("to: " + to);
+          alert("text: " + text);
           const ep = "https://api.line.me/v2/bot/message/push";
           fetch(ep, {
               method: "POST",
@@ -33,11 +33,8 @@
       const loginPlayer = (lineId, player) => {
           document.getElementById('message').innerText += JSON.stringify(player);
           alert(JSON.stringify(player));
-          pushLINE(lineId, JSON.stringify(player));
-          if ((Object.keys(player).length === 1) || (player.room_id === "")) {
-              alert(player.line_id);
-              document.getElementById('message').innerText += Object.keys(player).length;
-              document.getElementById('message').innerText += player.room_id;
+          pushLINE(lineId, "アカウント情報\n" + JSON.stringify(player));
+          if ((player === []) || (player.room_id === "")) {
               const ep = "https://api.line.me/v2/bot/profile/" + userId;
               fetch(ep, {headers: {Authorization: 'Bearer {{ header }}'}})
                   .then(res => res.json()).then(lineName => register(lineId, lineName))
@@ -51,7 +48,7 @@
       liff.init(data=>{
           const lineId = data.context.userId;
           const ep = "https://monopolyapp.herokuapp.com/api/players?format=json&line_id=" + lineId;
-          fetch(ep).then(res => res.json()).then(player => loginPlayer(lineId, player[0])).cache(err => {
+          fetch(ep).then(res => res.json()).then(player => loginPlayer(lineId, player)).cache(err => {
               alert("ブロファイル情報の取得に失敗しました。" + err);
           });
           liff.closeWindow();
