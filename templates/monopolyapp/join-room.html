@@ -7,12 +7,17 @@
   <p id="message"></p>
   <script>
       const pushLINE = (to, text) => {
+          alert(to);
+          alert(JSON.stringify(text));
           const ep = "https://api.line.me/v2/bot/message/push";
           fetch(ep, {
               method: "POST",
               headers: {'Authorization': 'Bearer {{ header }}'},
               body: JSON.stringify({'to': to, 'messages': [{'type': 'text', 'text': text}]})
-          }).then(response => response.status)
+          }).then(response => {
+              alert(response.status);
+              alert(JSON.stringify(response.json()));
+          })
       };
 
       const register = (lineId, lineName) => {
@@ -30,7 +35,7 @@
           alert(JSON.stringify(player));
           pushLINE(lineId, JSON.stringify(player));
           if ((Object.keys(player).length === 1) || (player.room_id === "")) {
-              alert(player.room_id);
+              alert(player.line_id);
               document.getElementById('message').innerText += Object.keys(player).length;
               document.getElementById('message').innerText += player.room_id;
               const ep = "https://api.line.me/v2/bot/profile/" + userId;

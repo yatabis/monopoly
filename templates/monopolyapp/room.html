@@ -39,7 +39,7 @@
     };
 
     const fetchPlayers = () => {
-        let ep = "https://monopolyapp.herokuapp.com/api/players?format=json&room_id=" + {{ room_id }};
+        let ep = "https://monopolyapp.herokuapp.com/api/players?format=json&room_id={{ room_id }}";
         fetch(ep).then(response => response.json()).then(json => updatePlayers(json));
     };
     setInterval(fetchPlayers, 1000);
