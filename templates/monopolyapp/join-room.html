@@ -12,13 +12,15 @@
           const ep = '{% url 'push-line' %}';
           fetch(ep, {
               method: "POST",
-              headers: {"X-CSRFToken": getCookie("csrftoken")},
+              headers: {"X-CSRFToken": getCookie("csrftoken"),
+                  'Accept': 'application/json',
+                  'X-Requested-With': 'XMLHttpRequest'},
               body: JSON.stringify({to: to, text: text})
           })
-          .then(response => {
-              alert(response.status);
-              alert(JSON.stringify(response.json()));
-          }).catch(err => {
+              .then(response => {
+                  alert(response.status);
+                  alert(JSON.stringify(response.json()));
+              }).catch(err => {
               alert("push LINE error");
               alert(err.toString());
           })
