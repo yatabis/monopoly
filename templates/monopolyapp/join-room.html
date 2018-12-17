@@ -17,6 +17,9 @@
           }).then(response => {
               alert(response.status);
               alert(JSON.stringify(response.json()));
+          }).catch(err => {
+              alert("push LINE error");
+              alert(err.toString());
           })
       };
 
@@ -31,16 +34,14 @@
       };
 
       const loginPlayer = (lineId, player) => {
-          document.getElementById('message').innerText += JSON.stringify(player);
           alert(JSON.stringify(player));
           pushLINE(lineId, "アカウント情報\n" + JSON.stringify(player));
-          if ((player === []) || (player.room_id === "")) {
+          if ((player.length === 0) || (player.room_id === "")) {
               const ep = "https://api.line.me/v2/bot/profile/" + userId;
               fetch(ep, {headers: {Authorization: 'Bearer {{ header }}'}})
                   .then(res => res.json()).then(lineName => register(lineId, lineName))
           } else {
               alert("予期せぬエラーが発生しました。");
-              document.getElementById('message').innerText += "予期せぬエラーが発生しました。";
               pushLINE(lineId, "予期せぬエラーが発生しました。")
           }
       };
