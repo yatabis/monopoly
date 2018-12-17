@@ -6,16 +6,14 @@
 {% block body %}
   <p id="message"></p>
   <script>
-      const line = require('@line/bot-sdk');
-
-      const client = new line.Client({
-          channelAccessToken: {{ header }}
-      });
-
       const pushLINE = (to, text) => {
           alert("to: " + to);
           alert("text: " + text);
-          const message = {'type': 'text', 'text': text}
+          const line = require('@line/bot-sdk');
+          const client = new line.Client({
+              channelAccessToken: {{ header }}
+          });
+          const message = {type: 'text', text: text};
           client.pushMessage(to, message)
           .then(response => {
               alert(response.status);
