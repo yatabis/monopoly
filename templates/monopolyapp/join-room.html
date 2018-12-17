@@ -12,8 +12,8 @@
           const ep = "https://api.line.me/v2/bot/message/push";
           fetch(ep, {
               method: "POST",
-              headers: {'Authorization': 'Bearer {{ header }}'},
-              body: {'to': to, 'messages': [{'type': 'text', 'text': text}]}
+              headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer {{ header }}'},
+              body: JSON.stringify({'to': to, 'messages': [{'type': 'text', 'text': text}]})
           }).then(response => {
               alert(response.status);
               alert(JSON.stringify(response.json()));
